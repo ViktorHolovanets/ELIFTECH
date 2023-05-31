@@ -19,7 +19,7 @@ function OrderItem({ product, onUpdateCount, onRemove }: Props) {
     };
 
     return (
-        <div className="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-0 col-lg-4 mt-2 mb-2  p-1">
+        <div className="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-0 col-lg-3 mt-2 mb-2  p-1">
             <div className="card h-100 bg-info">
                 <img src={product.product.poster} className="card-img-top" alt={product.product.name} />
                 <div className="card-body d-flex flex-column justify-content-between">

@@ -9,5 +9,6 @@ namespace Backend.Models.DB
         public List<Order> Products { get; set; }=new List<Order>();
         public DateTime DateOrderTime { get; set; } = DateTime.Now;
         public bool IsBuy { get; set; } = false;
+        public string Address { get; set; }
     }
 }

@@ -18,7 +18,7 @@ export default function Header() {
     };
     const handleAuth = () => {
         if(!isActive){
-            navigate("/login");
+            navigate("/auth");
         }
     };
 

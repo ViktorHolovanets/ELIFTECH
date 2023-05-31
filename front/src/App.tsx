@@ -7,7 +7,7 @@ import {useTypedSelector} from "./hooks/useTypedSelector";
 import './index.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import History from "./components/history/history";
-import FormAuth from "./components/login/formAuth";
+import FormAuth from "./components/auth/formAuth";
 
 
 

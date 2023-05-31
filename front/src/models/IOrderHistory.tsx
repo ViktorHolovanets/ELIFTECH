@@ -7,4 +7,5 @@ export default interface IOrderHistory {
     Products: IProductOrder[];
     DateOrderTime: Date;
     IsBuy: boolean;
+    Address:string;
 }

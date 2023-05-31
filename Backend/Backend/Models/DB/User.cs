@@ -18,6 +18,7 @@ namespace Backend.Models.DB
         [Required]
         [Phone]
         public string Phone { get; set; }
+
     }
 
 }
