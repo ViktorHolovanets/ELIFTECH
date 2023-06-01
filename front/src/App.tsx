@@ -23,7 +23,7 @@ function App() {
                     {IS_VIEW && <BuyOrder />}
                     <Routes>
                         <Route path="*" element={<Main />} />
-                        <Route path="/login" element={<FormAuth />} />
+                        <Route path="/auth" element={<FormAuth />} />
                         {isActive && <Route path="/history" element={<History />} />}
                     </Routes>
                 </div>

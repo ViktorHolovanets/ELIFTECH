@@ -1,6 +1,13 @@
 import React, {ChangeEvent, useState} from 'react';
+import axios from "axios";
+import {fetchRegister, fetchUser} from "../../services/httpRequestServices/httpRequest";
+import {useDispatch} from "react-redux";
+import {setToken, setUser} from "../../store/auth/actions";
+import {useNavigate} from "react-router-dom";
 
 export default function SignUp() {
+    const navigate = useNavigate()
+    const dispatch = useDispatch();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
@@ -28,7 +35,30 @@ export default function SignUp() {
     };
 
     const handleSubmit = () => {
-        // Ваша логіка для обробки події submit
+        if (!name || !email || !phone || !password || !confirmPassword) {
+            alert('Please fill in all fields');
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            alert('Passwords do not match');
+            return;
+        }
+        fetchRegister({
+            "userName": name,
+            "email": email,
+            "phone": phone,
+            "password": password,
+            "confirmPassword": confirmPassword
+        }).then(data => {
+            dispatch(setToken(data.token));
+            const user = fetchUser().then(user => {
+                console.log(user);
+                dispatch(setUser(user));
+            });
+
+        });
+        navigate("/");
     };
 
     return (

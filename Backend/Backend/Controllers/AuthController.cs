@@ -72,7 +72,6 @@ namespace Backend.Controllers
             var token = _authorizationHelper.GenerateAccessToken(user);
             return Ok(new
             {
-                name = user.UserName,
                 Token = token,
             });
         }

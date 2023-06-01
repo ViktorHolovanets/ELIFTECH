@@ -6,7 +6,7 @@ export const setToken = (token: string): AuthActionTypes => ({
     payload: token,
 });
 
-export const setUser = (user: IUser | null): AuthActionTypes => ({
+export const setUser = (user: IUser | undefined): AuthActionTypes => ({
     type: SET_USER,
     payload: user,
 });

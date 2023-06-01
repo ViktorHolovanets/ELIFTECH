@@ -2,7 +2,7 @@ import { SET_TOKEN, SET_USER, SET_TOKEN_EXISTS, AuthActionTypes, AuthState } fro
 
 const initialState: AuthState = {
     token: '',
-    user: null,
+    user: undefined,
     tokenExists: false,
 };
 
@@ -12,6 +12,7 @@ const authReducer = (state = initialState, action: AuthActionTypes): AuthState =
             return {
                 ...state,
                 token: action.payload,
+                tokenExists:true,
             };
         case SET_USER:
             return {

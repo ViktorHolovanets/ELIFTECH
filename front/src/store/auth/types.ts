@@ -6,7 +6,7 @@ export const SET_TOKEN_EXISTS = 'SET_TOKEN_EXISTS';
 
 export interface AuthState {
     token: string;
-    user: IUser | null;
+    user: IUser | undefined;
     tokenExists: boolean;
 }
 
@@ -17,7 +17,7 @@ export interface SetTokenAction {
 
 export interface SetUserAction {
     type: typeof SET_USER;
-    payload: IUser | null;
+    payload: IUser | undefined;
 }
 
 export interface SetTokenExistsAction {

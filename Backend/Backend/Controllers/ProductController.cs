@@ -49,7 +49,7 @@ namespace Backend.Controllers
                 await _dbApp.Histories.AddAsync(orderHistory);
                 await _dbApp.SaveChangesAsync();
 
-                return Ok(new{isOrder=true});
+                return Ok(new{isOrder=true, id=orderHistory.Id});
             }
             catch (Exception e)
             {

@@ -8,7 +8,7 @@ interface Props {
 function FormOrder({ handlerBack }: Props) {
     const user = useTypedSelector((state) => state.auth);
     const isAuth=user.tokenExists
-    const [name, setName] = useState(isAuth?user.user?.UserName:'');
+    const [name, setName] = useState(isAuth?user.user?.userName:'');
     const [email, setEmail] = useState(isAuth?user.user?.email:'');
     const [phone, setPhone] = useState(isAuth?user.user?.phone:'');
     const [address, setAddress] = useState('');

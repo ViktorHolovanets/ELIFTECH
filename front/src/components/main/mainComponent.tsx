@@ -1,21 +1,39 @@
 import React, {useEffect, useState} from 'react';
-import data from '../../data'
+
 import IProduct from "../../models/IProduct";
 import ProductItem from "./productItemComponent";
+import {fetchProducts} from "../../services/httpRequestServices/httpRequest";
 
-const uniquePlacesOfPurchase = data
-    .map(item => item.placeOfPurchase)
-    .filter((place, index, array) => array.indexOf(place) === index).sort();
+
 
 function Main() {
+    const [products, setProducts]=useState<IProduct[]>([])
     const [viewProducts, setViewProducts] = useState<IProduct[]>([]);
     const [selectedPlace, setSelectedPlace] = useState<string>('');
+    const uniquePlacesOfPurchase = products
+        .map(item => item.placeOfPurchase)
+        .filter((place, index, array) => array.indexOf(place) === index).sort();
+
     useEffect(() => {
-        handleClick(uniquePlacesOfPurchase[0])
-    }, [])
+        (async () => {
+            try {
+                const data = await fetchProducts();
+                setProducts(data);
+            } catch (error) {
+                console.error('Error fetching products:', error);
+                alert((error as Error).message) ;
+            }
+        })();
+
+    }, []);
+    useEffect(() => {
+        if (products.length > 0) {
+            handleClick(uniquePlacesOfPurchase[0]);
+        }
+    }, [products]);
 
     function handleClick(place: string) {
-        const filteredProducts = data.filter(product => product.placeOfPurchase === place);
+        const filteredProducts = products.filter(product => product.placeOfPurchase === place);
         setViewProducts(filteredProducts);
         setSelectedPlace(place);
     }
