@@ -2,10 +2,10 @@ import IProductOrder from "./IProductOrder";
 import IUser from "./IUser";
 
 export default interface IOrderHistory {
-    Id: string;
-    User: IUser | null;
-    Products: IProductOrder[];
-    DateOrderTime: Date;
-    IsBuy: boolean;
-    Address:string;
+    id:string
+    products: IProductOrder[];
+    name:string|undefined;
+    phone:string|undefined;
+    address:string;
+    dateOrderTime:Date|null
 }

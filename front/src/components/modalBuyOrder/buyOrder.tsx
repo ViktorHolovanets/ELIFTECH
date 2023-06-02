@@ -18,7 +18,6 @@ function BuyOrder() {
     const handleSend = () => setSend(!isSend);
     const getTotalPrice = (): number => {
         let totalPrice = 0;
-
         productOrders.forEach((order) => {
             const {product, count} = order;
             const productPrice = product.price;
@@ -54,11 +53,13 @@ function BuyOrder() {
                                 ))}
                             </div>
                             <div className='h5 mx-2 text-warning'>Total Price: {getTotalPrice().toFixed(2)}</div>
-                            <div className="d-flex justify-content-center align-items-center">
-                                <button className="btn btn-success col-12 col-sm-12 col-md-3 col-lg-4 m-2" onClick={handleSend}>
-                                    Send
-                                </button>
-                            </div>
+                            {productOrders.length > 0 &&
+                                <div className="d-flex justify-content-center align-items-center">
+                                    <button className="btn btn-success col-12 col-sm-12 col-md-3 col-lg-4 m-2"
+                                            onClick={handleSend}>
+                                        Next
+                                    </button>
+                                </div>}
                         </div> :
                         <FormOrder handlerBack={handleSend}/>
                 }

@@ -1,11 +1,10 @@
-
 import {
     ADD_PRODUCT_ORDER,
     REMOVE_PRODUCT_ORDER,
     UPDATE_PRODUCT_ORDER_COUNT,
     ProductOrderActionTypes,
     ProductOrderState,
-    VIEW_PRODUCT_ORDER
+    VIEW_PRODUCT_ORDER, CLEAN_PRODUCT_ORDER
 } from './types';
 
 
@@ -48,6 +47,12 @@ const productOrderReducer = (state = initialState, action: ProductOrderActionTyp
                 ...state,
                 productOrders: state.productOrders,
                 isView: !state.isView,
+            };
+        case CLEAN_PRODUCT_ORDER:
+            return {
+                ...state,
+                productOrders: [],
+                isView: false,
             };
         default:
             return state;

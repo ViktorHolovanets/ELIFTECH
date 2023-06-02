@@ -55,10 +55,10 @@ export default function SignUp() {
             const user = fetchUser().then(user => {
                 console.log(user);
                 dispatch(setUser(user));
+                navigate("/");
             });
 
         });
-        navigate("/");
     };
 
     return (

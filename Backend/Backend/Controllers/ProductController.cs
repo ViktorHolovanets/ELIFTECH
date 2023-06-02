@@ -1,6 +1,9 @@
 ﻿using Backend.Models.DB;
+using Backend.Models.Helpers;
+using Backend.Models.ValidationsRequest;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Backend.Controllers
 {
@@ -8,9 +11,12 @@ namespace Backend.Controllers
     public class ProductController : Controller
     {
         private DbApp _dbApp;
-        public ProductController(DbApp dbApp)
+        private AuthorizationHelper _authorizationHelper;
+        public ProductController(DbApp dbApp, IConfiguration configuration)
         {
-            this._dbApp=dbApp;
+
+            this._dbApp = dbApp;
+            _authorizationHelper = new AuthorizationHelper(configuration);
         }
         [HttpPost("products")]
         public async Task<IActionResult> AllProducts()
@@ -42,14 +48,36 @@ namespace Backend.Controllers
             }
         }
         [HttpPost("orders")]
-        public async Task<IActionResult> CreateOrder([FromBody] OrderHistory orderHistory)
+        public async Task<IActionResult> CreateOrder([FromBody] OrderRequest order)
         {
             try
             {
-                await _dbApp.Histories.AddAsync(orderHistory);
-                await _dbApp.SaveChangesAsync();
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                string? email = _authorizationHelper.GetEmailFromToken(HttpContext);
+                if (email != null)
+                {
+                    User? user = await _dbApp.Users.FirstOrDefaultAsync(u => u.Email == email);
 
-                return Ok(new{isOrder=true, id=orderHistory.Id});
+                    if (user != null)
+                    {
+                        var orderHistory = new OrderHistory()
+                        {
+                            User = user,
+                            Address = order.Address,
+                            IsBuy = true
+                        };
+                        var productIds = order.Products?.ToArray();
+                        orderHistory.Products?.AddRange(productIds);
+                        await _dbApp.Histories.AddAsync(orderHistory);
+                        await _dbApp.SaveChangesAsync();
+
+                        return Ok(new { isOrder = true, orderId = orderHistory.Id });
+                    }
+                }
+                return Ok(new { isOrder = false, orderId = "" });
             }
             catch (Exception e)
             {

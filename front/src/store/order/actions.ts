@@ -1,6 +1,7 @@
-
 import {
     ADD_PRODUCT_ORDER,
+    CLEAN_PRODUCT_ORDER,
+    CleanProductAction,
     ProductOrderActionTypes,
     REMOVE_PRODUCT_ORDER,
     UPDATE_PRODUCT_ORDER_COUNT,
@@ -38,5 +39,10 @@ export const updateProductOrderCount = (orderId: string, count: number): Product
 export const viewOrder = (): ProductOrderActionTypes => {
     return {
         type: VIEW_PRODUCT_ORDER,
+    };
+};
+export const clean = (): CleanProductAction => {
+    return {
+        type: CLEAN_PRODUCT_ORDER,
     };
 };

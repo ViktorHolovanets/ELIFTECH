@@ -21,7 +21,6 @@ export default function Login() {
             "password": password,
         }).then(data => {
             dispatch(setToken(data.token));
-
         });
         navigate("/");
     }

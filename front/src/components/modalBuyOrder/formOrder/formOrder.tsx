@@ -1,20 +1,42 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
+import {fetchOrder} from "../../../services/httpRequestServices/httpRequest";
+import {addOrderHistory} from "../../../store/hisrotyOrder/actions";
+import IOrderHistory from "../../../models/IOrderHistory";
+import {useDispatch} from "react-redux";
+import {clean} from "../../../store/order/actions";
 
 interface Props {
     handlerBack: Function;
 }
 
-function FormOrder({ handlerBack }: Props) {
+function FormOrder({handlerBack}: Props) {
+    const dispatch = useDispatch();
+    const productOrders = useTypedSelector((state) => state.order.productOrders);
     const user = useTypedSelector((state) => state.auth);
-    const isAuth=user.tokenExists
-    const [name, setName] = useState(isAuth?user.user?.userName:'');
-    const [email, setEmail] = useState(isAuth?user.user?.email:'');
-    const [phone, setPhone] = useState(isAuth?user.user?.phone:'');
+    const isAuth = user.tokenExists
+    const [name, setName] = useState(isAuth ? user.user?.userName : '');
+    const [email, setEmail] = useState(isAuth ? user.user?.email : '');
+    const [phone, setPhone] = useState(isAuth ? user.user?.phone : '');
     const [address, setAddress] = useState('');
 
-    const send = () => {
+    const send = async () => {
+        const newOrder:IOrderHistory={
+            id: '',
+            products: productOrders,
+            address: address,
+            dateOrderTime: new Date(),
+            name,
+            phone,
 
+        }
+        const result = await fetchOrder(newOrder)
+        console.log(result);
+        if (result?.isOrder) {
+            newOrder.id=result.orderId
+            dispatch(addOrderHistory(newOrder));
+            dispatch(clean());
+        }
     };
 
     return (
