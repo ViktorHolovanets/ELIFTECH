@@ -10,17 +10,15 @@ export default function Login() {
     const dispatch = useDispatch();
     const[email,setMail]=useState("");
     const[password,setPassword]=useState("");
-    const submit=() => {
+    const submit=async () => {
         if (!email || !password) {
             alert('Please fill in all fields');
             return;
         }
 
-        fetchLogin({
+        await fetchLogin({
             "email": email,
             "password": password,
-        }).then(data => {
-            dispatch(setToken(data.token));
         });
         navigate("/");
     }

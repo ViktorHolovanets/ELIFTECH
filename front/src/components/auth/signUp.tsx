@@ -34,7 +34,7 @@ export default function SignUp() {
         setConfirmPassword(event.target.value);
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!name || !email || !phone || !password || !confirmPassword) {
             alert('Please fill in all fields');
             return;
@@ -44,21 +44,14 @@ export default function SignUp() {
             alert('Passwords do not match');
             return;
         }
-        fetchRegister({
+        await fetchRegister({
             "userName": name,
             "email": email,
             "phone": phone,
             "password": password,
             "confirmPassword": confirmPassword
-        }).then(data => {
-            dispatch(setToken(data.token));
-            const user = fetchUser().then(user => {
-                console.log(user);
-                dispatch(setUser(user));
-                navigate("/");
-            });
-
         });
+        navigate("/");
     };
 
     return (

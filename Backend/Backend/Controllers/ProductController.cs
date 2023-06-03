@@ -34,7 +34,7 @@ namespace Backend.Controllers
         }
 
         [HttpPost("category")]
-        public async Task<IActionResult> Index([FromBody] string place)
+        public async Task<IActionResult> GetCategory([FromBody] string place)
         {
             try
             {
@@ -70,12 +70,23 @@ namespace Backend.Controllers
                             IsBuy = true
                         };
                         var productIds = order.Products?.ToArray();
-                        orderHistory.Products?.AddRange(productIds);
+                        foreach (var item in productIds)
+                        {
+                            orderHistory.Products?.Add(new Order()
+                            {
+                                Count = item.Count,
+                                Product = _dbApp.Products?.FirstOrDefault(p => p == item.Product),
+                            });
+                        }
                         await _dbApp.Histories.AddAsync(orderHistory);
                         await _dbApp.SaveChangesAsync();
 
                         return Ok(new { isOrder = true, orderId = orderHistory.Id });
                     }
+                }
+                else
+                {
+                    // to do
                 }
                 return Ok(new { isOrder = false, orderId = "" });
             }
@@ -84,5 +95,46 @@ namespace Backend.Controllers
                 return BadRequest(new { message = e.Message });
             }
         }
+        [HttpPost("history")]
+        public async Task<IActionResult> GetHistory()
+        {
+            try
+            {
+                string? email = _authorizationHelper.GetEmailFromToken(HttpContext);
+                if (email != null)
+                {
+                    User? user = await _dbApp.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+                    if (user != null)
+                    {
+                        var history = await _dbApp.Histories
+                            .Include(h => h.Products)
+                            .Where(h => h.User == user)
+                            .Select(h => new
+                            {
+                                h.Id,
+                                Products = h.Products.Select(p => new
+                                {
+                                    p.Id,
+                                    Product = p.Product,
+                                    p.Count
+                                }),
+                                h.Address,
+                                h.DateOrderTime,
+                                name = user.UserName,
+                                phone = user.Phone
+                            })
+                            .ToListAsync();
+                        return Ok(history);
+                    }
+                }
+                return BadRequest();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = e.Message });
+            }
+        }
+
     }
 }

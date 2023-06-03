@@ -26,8 +26,8 @@ function FormOrder({handlerBack}: Props) {
             products: productOrders,
             address: address,
             dateOrderTime: new Date(),
-            name,
-            phone,
+            name:name?name:"",
+            phone:phone?phone:"",
 
         }
         const result = await fetchOrder(newOrder)

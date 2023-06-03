@@ -1,7 +1,9 @@
 import IOrderHistory from "../../models/IOrderHistory";
 import {ADD_ORDER_HISTORY, SET_ORDER_HISTORY} from "./types";
 
-const initialState: IOrderHistory[] = [];
+const storedData = localStorage.getItem('history');
+const initialState: IOrderHistory[] = storedData ? JSON.parse(storedData) : [];
+
 
 export default function orderHistoryReducer(
     state: IOrderHistory[] = initialState,

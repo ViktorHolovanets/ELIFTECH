@@ -3,6 +3,7 @@ import IUser from "../../models/IUser";
 export const SET_TOKEN = 'SET_TOKEN';
 export const SET_USER = 'SET_USER';
 export const SET_TOKEN_EXISTS = 'SET_TOKEN_EXISTS';
+export const LOGOUT = 'LOGOUT';
 
 export interface AuthState {
     token: string;
@@ -24,5 +25,8 @@ export interface SetTokenExistsAction {
     type: typeof SET_TOKEN_EXISTS;
     payload: boolean;
 }
+export interface LogoutAction {
+    type: typeof LOGOUT;
+}
 
-export type AuthActionTypes = SetTokenAction | SetUserAction | SetTokenExistsAction;
+export type AuthActionTypes = SetTokenAction | SetUserAction | SetTokenExistsAction|LogoutAction;

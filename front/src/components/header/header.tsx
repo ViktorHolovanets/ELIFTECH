@@ -6,6 +6,7 @@ import { RiHome2Fill } from "react-icons/ri";
 import {Link, useNavigate } from "react-router-dom";
 
 import { useTypedSelector } from "../../hooks/useTypedSelector";
+import {logout} from "../../store/auth/actions";
 
 export default function Header() {
     const navigate =useNavigate ()
@@ -19,6 +20,10 @@ export default function Header() {
     const handleAuth = () => {
         if(!isActive){
             navigate("/auth");
+        }
+        else {
+            dispatch(logout())
+            localStorage.clear();
         }
     };
 
@@ -43,7 +48,7 @@ export default function Header() {
                     <GiBasket />
                     Buy order
                 </div>
-                <button onClick={handleAuth}>{!isActive ? "Login" : "Logout"}</button>
+                <button onClick={handleAuth} className={isActive?"bg-danger":"bg-success"}>{!isActive ? "Login" : "Logout"} </button>
             </nav>
         </header>
     );
