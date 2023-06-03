@@ -41,7 +41,7 @@ export type ProductOrderActionTypes =
     |ViewProductOrderAction
     |CleanProductAction;
 
-// Тип стану
+
 export interface ProductOrderState {
     productOrders: IProductOrder[];
     isView:boolean

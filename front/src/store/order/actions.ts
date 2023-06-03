@@ -16,7 +16,6 @@ export const addProductOrder = (productOrder: IProductOrder): ProductOrderAction
     };
 };
 
-// Видалити продукт з замовлення
 export const removeProductOrder = (orderId: string): ProductOrderActionTypes => {
     return {
         type: REMOVE_PRODUCT_ORDER,
@@ -26,7 +25,6 @@ export const removeProductOrder = (orderId: string): ProductOrderActionTypes => 
     };
 };
 
-// Оновити кількість продукту в замовленні
 export const updateProductOrderCount = (orderId: string, count: number): ProductOrderActionTypes => {
     return {
         type: UPDATE_PRODUCT_ORDER_COUNT,

@@ -1,4 +1,3 @@
-// store.ts
 import {applyMiddleware, createStore} from 'redux';
 import {rootReducer} from "./rootReducer";
 

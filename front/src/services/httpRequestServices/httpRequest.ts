@@ -47,7 +47,7 @@ export const fetchProducts = async (): Promise<IProduct[]> => {
     } catch (error) {
         console.error('Error fetching products:', error);
         alert((error as Error).message);
-        return []; // Return an empty array or handle the error case accordingly
+        return [];
     }
 };
 

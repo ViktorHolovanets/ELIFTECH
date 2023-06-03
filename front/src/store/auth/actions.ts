@@ -10,7 +10,7 @@ export const setToken = (token: string) => {
 };
 
 export const setUser = (user: IUser | undefined) => {
-    localStorage.setItem('user', JSON.stringify(user)); // зберігаємо користувача у localStorage у вигляді рядка JSON
+    localStorage.setItem('user', JSON.stringify(user));
     return {
         type: 'SET_USER',
         payload: user,
